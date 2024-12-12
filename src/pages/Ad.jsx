@@ -27,6 +27,33 @@ const Ad = () => {
     fetchAd();
   }, [id]);
 
+  const renderMedia = () => {
+    if (ad.imageUrl) {
+      return (
+        <img
+          src={ad.imageUrl}
+          alt={ad.product}
+          className="w-full h-full object-cover rounded-xl"
+        />
+      );
+    } else if (ad.videoUrl) {
+      return (
+        <video
+          src={ad.videoUrl}
+          controls
+          className="w-full h-full object-cover rounded-xl"
+        >
+          Your browser does not support the video tag.
+        </video>
+      );
+    }
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-xl">
+        <p className="text-gray-500">No media available</p>
+      </div>
+    );
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -46,18 +73,10 @@ const Ad = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-20">
       <div className="flex flex-col md:flex-row gap-8">
-        {/* Left Side - Image Section */}
+        {/* Left Side - Media Section */}
         <div className="md:w-1/2">
-          <div className="aspect-w-16 aspect-h-12 rounded-2xl overflow-hidden bg-gray-100">
-            <img
-              src={ad.mediaUrl1}
-              alt={ad.product}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                console.error('Image failed to load:', ad.mediaUrl1);
-                e.target.src = 'path/to/fallback-image.jpg'; // Optional: Add a fallback image
-              }}
-            />
+          <div className="aspect-w-16 aspect-h-12 rounded-xl overflow-hidden bg-gray-100">
+            {renderMedia()}
           </div>
         </div>
 

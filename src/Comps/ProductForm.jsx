@@ -8,7 +8,8 @@ const ProductForm = ({ onClose }) => {
     fullName: "",
     product: "",
     description: "",
-    mediaUrl1: "",
+    imageUrl: "",
+    videoUrl: "",
     mediaUrl2: ""
   });
   const [loading, setLoading] = useState(false);
@@ -20,23 +21,9 @@ const ProductForm = ({ onClose }) => {
     setError("");
 
     try {
-      // Validate first URL (media link)
-      const mediaUrlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-      
-      // Special pattern for Google Drive links
-      const driveUrlPattern = /^https:\/\/drive\.google\.com\/(file\/d\/|drive\/folders\/|open\?id=)[-\w]+/;
-      
-      if (!mediaUrlPattern.test(formData.mediaUrl1)) {
-        throw new Error("Please enter a valid media URL");
-      }
-
-      if (!driveUrlPattern.test(formData.mediaUrl2)) {
-        throw new Error("Please enter a valid Google Drive link");
-      }
-
-      // Check if user is authenticated
-      if (!auth.currentUser) {
-        throw new Error("You must be logged in to submit a product");
+      // Validate that at least one media URL is provided
+      if (!formData.imageUrl && !formData.videoUrl) {
+        throw new Error("Please provide either an image or video link");
       }
 
       // Add to Firestore
@@ -54,17 +41,6 @@ const ProductForm = ({ onClose }) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  // Validate form before submission
-  const isFormValid = () => {
-    return (
-      formData.fullName.trim() !== "" &&
-      formData.product.trim() !== "" &&
-      formData.description.trim() !== "" &&
-      formData.mediaUrl1.trim() !== "" &&
-      formData.mediaUrl2.trim() !== ""
-    );
   };
 
   return (
@@ -120,23 +96,28 @@ const ProductForm = ({ onClose }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Media Link (Google Drive)
+              Image Link
             </label>
             <input
               type="url"
-              required
-              placeholder="https://drive.google.com/file/d/..."
+              placeholder="https://example.com/image.jpg"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={formData.mediaUrl1}
-              onChange={(e) => setFormData({ ...formData, mediaUrl1: e.target.value })}
+              value={formData.imageUrl}
+              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
             />
-            <p className="mt-1 text-sm text-gray-500">
-              Steps to share image:
-              1. Upload to Google Drive
-              2. Right-click → Share
-              3. Change to "Anyone with the link"
-              4. Copy link
-            </p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Video Link
+            </label>
+            <input
+              type="url"
+              placeholder="https://example.com/video.mp4"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={formData.videoUrl}
+              onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
+            />
           </div>
 
           <div>
@@ -151,9 +132,6 @@ const ProductForm = ({ onClose }) => {
               value={formData.mediaUrl2}
               onChange={(e) => setFormData({ ...formData, mediaUrl2: e.target.value })}
             />
-            <p className="mt-1 text-sm text-gray-500">
-              Please share a Google Drive link with viewing access
-            </p>
           </div>
 
           <div className="flex justify-end space-x-4 pt-4">
