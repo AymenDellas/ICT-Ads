@@ -94,52 +94,72 @@ const Home = () => {
   ];
   return (
     <>
-      <div className=" mt-32">
+      <div className="mt-32">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeIn" }}
           id="aboutus"
-          className="bg-actions xl:mx-96 lg:mx-10 mx-8 flex flex-col justify-between   2xl:flex-row p-8 rounded-lg relative"
+          className="bg-actions xl:mx-96 lg:mx-10 mx-8 p-12 rounded-2xl relative"
         >
-          <div className=" text-primaryContent mb-8">
-            <p className="text-5xl font-bold mb-8">
-              Pick Something... <br />
-              The Price 3lina
-            </p>
-            <p className="ml-4 font-semibold text-xl">
-              Sel3a TIC provides its customers with everything they need to
-              accomplish their daily tasks more efficiently, improve quality
-              time with their loved ones, and spend less money.
-            </p>
-            <div className="bottom-0 left-0 mb-8 ml-10 rounded-lg bg-actionsHover py-2 px-4 cursor-pointer hover:bg-[#475a41] transition-all font-semibold absolute ">
-              <div className="flex">
-                <Link to={"/advertisments"}>Our Ads</Link>
-                <img
-                  src={arrowImage}
-                  alt=""
-                  className="w-4 ml-2 fill-white"
-                />
+          <div className="flex flex-col 2xl:flex-row items-center gap-12">
+            <div className="text-primaryContent 2xl:w-1/2">
+              <h1 className="text-5xl font-bold mb-6">
+                Pick Something... <br />
+                The Price 3lina
+              </h1>
+              <p className="text-xl font-semibold mb-8 opacity-90">
+                Sel3a TIC provides its customers with everything they need to
+                accomplish their daily tasks more efficiently, improve quality
+                time with their loved ones, and spend less money.
+              </p>
+              <div className="hidden 2xl:block">
+                <Link 
+                  to={"/advertisments"}
+                  className="inline-flex items-center px-8 py-4 bg-actionsHover rounded-xl hover:bg-opacity-90 transition-all duration-200 text-primaryContent font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                >
+                  Our Ads
+                  <img
+                    src={arrowImage}
+                    alt=""
+                    className="w-5 ml-3 fill-white"
+                  />
+                </Link>
+              </div>
+            </div>
+
+            <div className="2xl:w-1/2 flex flex-col items-center">
+              <img
+                src={heroImage}
+                className="rounded-xl shadow-lg w-full max-w-[600px] object-cover"
+                alt="Hero"
+              />
+              <div className="block 2xl:hidden mt-8">
+                <Link 
+                  to={"/advertisments"}
+                  className="inline-flex items-center px-8 py-4 bg-actionsHover rounded-xl hover:bg-opacity-90 transition-all duration-200 text-primaryContent font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                >
+                  Our Ads
+                  <img
+                    src={arrowImage}
+                    alt=""
+                    className="w-5 ml-3 fill-white"
+                  />
+                </Link>
               </div>
             </div>
           </div>
-          <div className="">
-            <img
-              src={heroImage}
-              alt=""
-              className="rounded-lg w-[600px] 2xl:w-fit"
-            />
-          </div>
         </motion.div>
+
         <div className="absolute flex justify-around -z-40 blur-sm">
           <div className="blur-3xl right-0 absolute -z-50">
             <div className="absolute right-0 w-24 h-24 bg-primaryContent rounded-full blur-3xl -z-50"></div>
           </div>
           <div>
-            <img src={watchImage} className="" />
+            <img src={watchImage} alt="" />
           </div>
           <div>
-            <img src={lapImage} className="" />
+            <img src={lapImage} alt="" />
           </div>
         </div>
 
