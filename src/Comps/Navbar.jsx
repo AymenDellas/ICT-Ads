@@ -29,7 +29,7 @@ const Navbar = () => {
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link to="/" className="text-xl xl:text-2xl font-bold text-primaryContent">
-                Sel3a TIC
+                AdScope
               </Link>
             </div>
 

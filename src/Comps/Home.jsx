@@ -100,18 +100,15 @@ const Home = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeIn" }}
           id="aboutus"
-          className="bg-actions xl:mx-96 lg:mx-10 mx-8 p-12 rounded-2xl relative"
+          className="bg-actions xl:mx-96 lg:mx-10 mx-8 p-4 rounded-2xl relative"
         >
           <div className="flex flex-col 2xl:flex-row items-center gap-12">
             <div className="text-primaryContent 2xl:w-1/2">
               <h1 className="text-5xl font-bold mb-6">
-                Pick Something... <br />
-                The Price 3lina
+              Expand Your Reach with AdScope
               </h1>
               <p className="text-xl font-semibold mb-8 opacity-90">
-                Sel3a TIC provides its customers with everything they need to
-                accomplish their daily tasks more efficiently, improve quality
-                time with their loved ones, and spend less money.
+                Your ultimate platform for connecting businesses with their audience. Discover, post, and manage ads effortlessly to boost visibility and drive results. Let your message shine with AdScope!
               </p>
               <div className="hidden 2xl:block">
                 <Link 
