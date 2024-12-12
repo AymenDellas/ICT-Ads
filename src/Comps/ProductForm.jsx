@@ -15,18 +15,22 @@ const ProductForm = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const convertDriveLink = (url, type) => {
+  const isFormValid = () => {
+    return (
+      formData.fullName.trim() !== "" &&
+      formData.product.trim() !== "" &&
+      formData.description.trim() !== "" &&
+      formData.mediaUrl2.trim() !== "" &&
+      (formData.imageUrl.trim() !== "" || formData.videoUrl.trim() !== "") // At least one media URL required
+    );
+  };
+
+  const convertDriveLink = (url) => {
     try {
       if (url.includes('drive.google.com')) {
-        // Extract file ID using a more robust regex
         const fileId = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
         if (fileId && fileId[1]) {
-          if (type === 'image') {
-            // For images, use the direct thumbnail URL
-            return `https://drive.google.com/thumbnail?id=${fileId[1]}&sz=w1000`;
-          } else if (type === 'video') {
-            return `https://drive.google.com/file/d/${fileId[1]}/preview`;
-          }
+          return `https://drive.google.com/file/d/${fileId[1]}/preview`;
         }
       }
       return url;
@@ -48,8 +52,7 @@ const ProductForm = ({ onClose }) => {
 
       const processedData = {
         ...formData,
-        imageUrl: formData.imageUrl ? convertDriveLink(formData.imageUrl, 'image') : "",
-        videoUrl: formData.videoUrl ? convertDriveLink(formData.videoUrl, 'video') : "",
+        videoUrl: formData.videoUrl ? convertDriveLink(formData.videoUrl) : "",
       };
 
       await addDoc(collection(db, "products"), {
