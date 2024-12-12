@@ -15,14 +15,21 @@ const ProductForm = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const isFormValid = () => {
-    return (
-      formData.fullName.trim() !== "" &&
-      formData.product.trim() !== "" &&
-      formData.description.trim() !== "" &&
-      formData.mediaUrl2.trim() !== "" &&
-      (formData.imageUrl.trim() !== "" || formData.videoUrl.trim() !== "") // At least one media URL required
-    );
+  const convertDriveLink = (url) => {
+    try {
+      if (url.includes('drive.google.com')) {
+        // Extract file ID
+        const fileId = url.match(/\/d\/(.*?)\/|id=(.*?)$/);
+        if (fileId && (fileId[1] || fileId[2])) {
+          const id = fileId[1] || fileId[2];
+          return `https://drive.google.com/file/d/${id}/preview`;
+        }
+      }
+      return url;
+    } catch (error) {
+      console.error("Error converting Drive link:", error);
+      return url;
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -37,8 +44,13 @@ const ProductForm = ({ onClose }) => {
       }
 
       // Add to Firestore
-      const docRef = await addDoc(collection(db, "products"), {
+      const processedFormData = {
         ...formData,
+        videoUrl: formData.videoUrl ? convertDriveLink(formData.videoUrl) : "",
+      };
+
+      const docRef = await addDoc(collection(db, "products"), {
+        ...processedFormData,
         userId: auth.currentUser.uid,
         createdAt: new Date().toISOString(),
       });

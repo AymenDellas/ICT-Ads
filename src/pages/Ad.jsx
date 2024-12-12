@@ -28,23 +28,23 @@ const Ad = () => {
   }, [id]);
 
   const renderMedia = () => {
-    if (ad.imageUrl) {
+    if (ad.videoUrl) {
+      return (
+        <iframe
+          src={ad.videoUrl}
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          className="w-full h-full rounded-xl"
+          frameBorder="0"
+        />
+      );
+    } else if (ad.imageUrl) {
       return (
         <img
           src={ad.imageUrl}
           alt={ad.product}
           className="w-full h-full object-cover rounded-xl"
         />
-      );
-    } else if (ad.videoUrl) {
-      return (
-        <video
-          src={ad.videoUrl}
-          controls
-          className="w-full h-full object-cover rounded-xl"
-        >
-          Your browser does not support the video tag.
-        </video>
       );
     }
     return (
