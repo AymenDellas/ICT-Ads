@@ -15,14 +15,22 @@ const ProductForm = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const isFormValid = () => {
+    return (
+      formData.fullName.trim() !== "" &&
+      formData.product.trim() !== "" &&
+      formData.description.trim() !== "" &&
+      formData.mediaUrl2.trim() !== "" &&
+      (formData.imageUrl.trim() !== "" || formData.videoUrl.trim() !== "")
+    );
+  };
+
   const convertDriveLink = (url) => {
     try {
       if (url.includes('drive.google.com')) {
-        // Extract file ID
-        const fileId = url.match(/\/d\/(.*?)\/|id=(.*?)$/);
-        if (fileId && (fileId[1] || fileId[2])) {
-          const id = fileId[1] || fileId[2];
-          return `https://drive.google.com/file/d/${id}/preview`;
+        const fileId = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+        if (fileId && fileId[1]) {
+          return `https://drive.google.com/file/d/${fileId[1]}/preview`;
         }
       }
       return url;
@@ -38,19 +46,17 @@ const ProductForm = ({ onClose }) => {
     setError("");
 
     try {
-      // Validate that at least one media URL is provided
       if (!formData.imageUrl && !formData.videoUrl) {
         throw new Error("Please provide either an image or video link");
       }
 
-      // Add to Firestore
-      const processedFormData = {
+      const processedData = {
         ...formData,
         videoUrl: formData.videoUrl ? convertDriveLink(formData.videoUrl) : "",
       };
 
-      const docRef = await addDoc(collection(db, "products"), {
-        ...processedFormData,
+      await addDoc(collection(db, "products"), {
+        ...processedData,
         userId: auth.currentUser.uid,
         createdAt: new Date().toISOString(),
       });

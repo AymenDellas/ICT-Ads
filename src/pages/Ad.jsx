@@ -30,13 +30,16 @@ const Ad = () => {
   const renderMedia = () => {
     if (ad.videoUrl) {
       return (
-        <iframe
-          src={ad.videoUrl}
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          className="w-full h-full rounded-xl"
-          frameBorder="0"
-        />
+        <div className="w-full h-full aspect-video">
+          <iframe
+            src={ad.videoUrl}
+            className="w-full h-full rounded-xl"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title="Embedded Drive Video"
+          />
+        </div>
       );
     } else if (ad.imageUrl) {
       return (
@@ -75,7 +78,7 @@ const Ad = () => {
       <div className="flex flex-col md:flex-row gap-8">
         {/* Left Side - Media Section */}
         <div className="md:w-1/2">
-          <div className="aspect-w-16 aspect-h-12 rounded-xl overflow-hidden bg-gray-100">
+          <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden bg-gray-100">
             {renderMedia()}
           </div>
         </div>
