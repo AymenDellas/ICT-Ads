@@ -141,11 +141,14 @@ const ProductForm = ({ onClose }) => {
             </label>
             <input
               type="url"
-              placeholder="https://example.com/video.mp4"
+              placeholder="Google Drive video link..."
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.videoUrl}
               onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
             />
+            <p className="mt-1 text-sm text-gray-500">
+              Supports various video formats (MP4, MOV, AVI, etc.) through Google Drive
+            </p>
           </div>
 
           <div>
