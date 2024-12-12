@@ -5,13 +5,13 @@ import { div, path } from "motion/react-client";
 
 const Home = () => {
   const partners = [
-    "/src/assets/amazon.png",
-    "/src/assets/apple.png",
-    "/src/assets/asus.png",
-    "/src/assets/google.png",
-    "/src/assets/lenevo.png",
-    "/src/assets/microsoft.png",
-    "/src/assets/samsung.png",
+    "../assets/amazon.png",
+    "../assets/apple.png",
+    "../assets/asus.png",
+    "../assets/google.png",
+    "../assets/lenevo.png",
+    "../assets/microsoft.png",
+    "../assets/samsung.png",
   ];
   const categories = [
     {
@@ -101,7 +101,7 @@ const Home = () => {
               <div className="flex">
                 <Link to={"/advertisments"}>Our Ads</Link>
                 <img
-                  src="/src/assets/arrow.svg"
+                  src="../assets/arrow.svg"
                   alt=""
                   className="w-4 ml-2 fill-white"
                 />
@@ -110,7 +110,7 @@ const Home = () => {
           </div>
           <div className="">
             <img
-              src="/src/assets/hero.jpg"
+              src="../assets/hero.jpg"
               alt=""
               className="rounded-lg w-[600px] 2xl:w-fit"
             />
@@ -121,10 +121,10 @@ const Home = () => {
             <div className="absolute right-0 w-24 h-24 bg-primaryContent rounded-full blur-3xl -z-50"></div>
           </div>
           <div>
-            <img src="/src/assets/watch.png" className="" />
+            <img src="../assets/watch.png" className="" />
           </div>
           <div>
-            <img src="/src/assets/lap.png" className="" />
+            <img src="../assets/lap.png" className="" />
           </div>
         </div>
 
