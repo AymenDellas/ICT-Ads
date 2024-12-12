@@ -18,13 +18,13 @@ const ProductForm = ({ onClose }) => {
   const convertDriveLink = (url, type) => {
     try {
       if (url.includes('drive.google.com')) {
+        // Extract file ID using a more robust regex
         const fileId = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
         if (fileId && fileId[1]) {
           if (type === 'image') {
-            // For images, use the direct view export
-            return `https://drive.google.com/uc?export=view&id=${fileId[1]}`;
+            // For images, use the direct thumbnail URL
+            return `https://drive.google.com/thumbnail?id=${fileId[1]}&sz=w1000`;
           } else if (type === 'video') {
-            // For videos, use the preview format
             return `https://drive.google.com/file/d/${fileId[1]}/preview`;
           }
         }

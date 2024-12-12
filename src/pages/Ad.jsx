@@ -42,15 +42,26 @@ const Ad = () => {
         </div>
       );
     } else if (ad.imageUrl) {
+      // For images, use an iframe for Google Drive images
+      if (ad.imageUrl.includes('drive.google.com')) {
+        return (
+          <div className="w-full h-full aspect-video">
+            <iframe
+              src={`https://drive.google.com/file/d/${ad.imageUrl.match(/id=([^&]+)/)[1]}/preview`}
+              className="w-full h-full rounded-xl"
+              frameBorder="0"
+              allowFullScreen
+              title="Embedded Drive Image"
+            />
+          </div>
+        );
+      }
+      // For non-Drive images, use regular img tag
       return (
         <img
           src={ad.imageUrl}
           alt={ad.product}
           className="w-full h-full object-cover rounded-xl"
-          onError={(e) => {
-            console.error('Image failed to load:', ad.imageUrl);
-            e.target.src = '/path/to/default-image.jpg'; // Add a fallback image
-          }}
         />
       );
     }
