@@ -74,6 +74,24 @@ const Advertisments = () => {
     return 'path/to/default-thumbnail.jpg'; // Add a default thumbnail image
   };
 
+  // Add this highlight function
+  const highlightText = (text, searchTerm) => {
+    if (!searchTerm.trim()) return text;
+
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    const parts = text.split(regex);
+
+    return parts.map((part, index) => 
+      regex.test(part) ? (
+        <span key={index} className="bg-yellow-200 text-gray-900">
+          {part}
+        </span>
+      ) : (
+        <span key={index}>{part}</span>
+      )
+    );
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -144,11 +162,11 @@ const Advertisments = () => {
             </div>
             <div className="p-3 bg-actions">
               <h3 className="font-semibold text-primaryContent text-sm mb-1 truncate">
-                {ad.product}
+                {highlightText(ad.product, searchTerm)}
               </h3>
               <div className="flex justify-between items-center">
                 <p className="text-primaryContent text-xs truncate">
-                  {ad.fullName}
+                  {highlightText(ad.fullName, searchTerm)}
                 </p>
               </div>
             </div>

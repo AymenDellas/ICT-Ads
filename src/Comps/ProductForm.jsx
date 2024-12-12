@@ -10,7 +10,8 @@ const ProductForm = ({ onClose }) => {
     description: "",
     imageUrl: "",
     videoUrl: "",
-    mediaUrl2: ""
+    mediaUrl2: "",
+    mediaType: ""
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -21,7 +22,7 @@ const ProductForm = ({ onClose }) => {
       formData.product.trim() !== "" &&
       formData.description.trim() !== "" &&
       formData.mediaUrl2.trim() !== "" &&
-      (formData.imageUrl.trim() !== "" || formData.videoUrl.trim() !== "") // At least one media URL required
+      formData.mediaType !== ""
     );
   };
 
@@ -69,6 +70,15 @@ const ProductForm = ({ onClose }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleMediaChange = (type, value) => {
+    setFormData(prev => ({
+      ...prev,
+      mediaType: type,
+      imageUrl: type === 'image' ? value : '',
+      videoUrl: type === 'video' ? value : '',
+    }));
   };
 
   return (
@@ -122,34 +132,66 @@ const ProductForm = ({ onClose }) => {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Image Link
+          <div className="flex gap-4 mb-4">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="mediaType"
+                value="image"
+                checked={formData.mediaType === 'image'}
+                onChange={(e) => handleMediaChange('image', '')}
+                className="mr-2"
+              />
+              Image
             </label>
-            <input
-              type="url"
-              placeholder="https://example.com/image.jpg"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={formData.imageUrl}
-              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-            />
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="mediaType"
+                value="video"
+                checked={formData.mediaType === 'video'}
+                onChange={(e) => handleMediaChange('video', '')}
+                className="mr-2"
+              />
+              Video
+            </label>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Video Link
-            </label>
-            <input
-              type="url"
-              placeholder="Google Drive video link..."
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={formData.videoUrl}
-              onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
-            />
-            <p className="mt-1 text-sm text-gray-500">
-              Supports various video formats (MP4, MOV, AVI, etc.) through Google Drive
-            </p>
-          </div>
+          {formData.mediaType === 'image' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Image Link
+              </label>
+              <input
+                type="url"
+                placeholder="Enter image URL..."
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.imageUrl}
+                onChange={(e) => handleMediaChange('image', e.target.value)}
+              />
+              <p className="mt-1 text-xs text-gray-500">
+                Upload your image to PostImages and paste the direct link here
+              </p>
+            </div>
+          )}
+
+          {formData.mediaType === 'video' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Video Link (Google Drive)
+              </label>
+              <input
+                type="url"
+                placeholder="Enter Google Drive video link..."
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.videoUrl}
+                onChange={(e) => handleMediaChange('video', e.target.value)}
+              />
+              <p className="mt-1 text-xs text-gray-500">
+                Share your video on Google Drive and paste the link here
+              </p>
+            </div>
+          )}
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
