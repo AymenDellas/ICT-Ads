@@ -63,15 +63,20 @@ const Advertisments = () => {
   // Function to get thumbnail URL
   const getThumbnail = (ad) => {
     if (ad.imageUrl) {
+      if (ad.imageUrl.includes('drive.google.com')) {
+        const fileId = ad.imageUrl.match(/id=([a-zA-Z0-9_-]+)/);
+        if (fileId && fileId[1]) {
+          return `https://drive.google.com/uc?export=view&id=${fileId[1]}`;
+        }
+      }
       return ad.imageUrl;
     } else if (ad.videoUrl) {
-      // Extract video ID and create thumbnail URL
       const videoId = ad.videoUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
       if (videoId && videoId[1]) {
         return `https://drive.google.com/thumbnail?id=${videoId[1]}`;
       }
     }
-    return 'path/to/default-thumbnail.jpg'; // Add a default thumbnail image
+    return '/path/to/default-thumbnail.jpg'; // Add a default thumbnail
   };
 
   if (loading) {

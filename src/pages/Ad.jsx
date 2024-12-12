@@ -47,6 +47,10 @@ const Ad = () => {
           src={ad.imageUrl}
           alt={ad.product}
           className="w-full h-full object-cover rounded-xl"
+          onError={(e) => {
+            console.error('Image failed to load:', ad.imageUrl);
+            e.target.src = '/path/to/default-image.jpg'; // Add a fallback image
+          }}
         />
       );
     }
@@ -78,7 +82,7 @@ const Ad = () => {
       <div className="flex flex-col md:flex-row gap-8">
         {/* Left Side - Media Section */}
         <div className="md:w-1/2">
-          <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden bg-gray-100">
+          <div className="aspect-w-16 aspect-h-12 rounded-xl overflow-hidden bg-gray-100">
             {renderMedia()}
           </div>
         </div>
