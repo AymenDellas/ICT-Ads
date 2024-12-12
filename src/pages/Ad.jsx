@@ -49,13 +49,14 @@ const Ad = () => {
         {/* Left Side - Image Section */}
         <div className="md:w-1/2">
           <div className="aspect-w-16 aspect-h-12 rounded-2xl overflow-hidden bg-gray-100">
-            <iframe
+            <img
               src={ad.mediaUrl1}
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              className="w-full h-full"
-              frameBorder="0"
-              loading="lazy"
+              alt={ad.product}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                console.error('Image failed to load:', ad.mediaUrl1);
+                e.target.src = 'path/to/fallback-image.jpg'; // Optional: Add a fallback image
+              }}
             />
           </div>
         </div>

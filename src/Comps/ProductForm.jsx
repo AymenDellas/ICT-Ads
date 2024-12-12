@@ -67,24 +67,6 @@ const ProductForm = ({ onClose }) => {
     );
   };
 
-  const convertGoogleDriveLink = (url) => {
-    try {
-      if (url.includes('drive.google.com')) {
-        // Extract file ID from various Google Drive URL formats
-        const fileId = url.match(/\/d\/(.*?)\/|id=(.*?)$/);
-        if (fileId && (fileId[1] || fileId[2])) {
-          const id = fileId[1] || fileId[2];
-          // Use the more reliable embed format
-          return `https://drive.google.com/file/d/${id}/preview`;
-        }
-      }
-      return url;
-    } catch (error) {
-      console.error("Error converting Drive link:", error);
-      return url;
-    }
-  };
-
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
@@ -138,16 +120,23 @@ const ProductForm = ({ onClose }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Media Link
+              Media Link (Google Drive)
             </label>
             <input
               type="url"
               required
-              placeholder="https://example.com/image.jpg"
+              placeholder="https://drive.google.com/file/d/..."
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.mediaUrl1}
               onChange={(e) => setFormData({ ...formData, mediaUrl1: e.target.value })}
             />
+            <p className="mt-1 text-sm text-gray-500">
+              Steps to share image:
+              1. Upload to Google Drive
+              2. Right-click → Share
+              3. Change to "Anyone with the link"
+              4. Copy link
+            </p>
           </div>
 
           <div>
