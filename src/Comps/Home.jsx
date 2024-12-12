@@ -2,16 +2,31 @@ import React from "react";
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import { div, path } from "motion/react-client";
+import amazonImage from "../assets/amazon.png";
+import appleImage from "../assets/apple.png";
+import asusImage from "../assets/asus.png";
+import googleImage from "../assets/google.png";
+import lenevoImage from "../assets/lenevo.png";
+import microsoftImage from "../assets/microsoft.png";
+import samsungImage from "../assets/samsung.png";
+import arrowImage from "../assets/arrow.svg";
+import heroImage from "../assets/hero.jpg";
+import watchImage from "../assets/watch.png";
+import lapImage from "../assets/lap.png";
+import cartImage from "../assets/cart.svg";
+import customerserviceImage from "../assets/customerservice.svg";
+import hanbdImage from "../assets/hanbd.svg";
+import cookedImage from "../assets/cooked.svg";
 
 const Home = () => {
   const partners = [
-    "../assets/amazon.png",
-    "../assets/apple.png",
-    "../assets/asus.png",
-    "../assets/google.png",
-    "../assets/lenevo.png",
-    "../assets/microsoft.png",
-    "../assets/samsung.png",
+    amazonImage,
+    appleImage,
+    asusImage,
+    googleImage,
+    lenevoImage,
+    microsoftImage,
+    samsungImage,
   ];
   const categories = [
     {
@@ -59,22 +74,22 @@ const Home = () => {
     {
       title: "Product Sales",
       desc: "Selling a range of TIC products such as smartphones, tablets, laptops, smartwatches, and accessories.",
-      imgUrl: "/src/assets/cart.svg",
+      imgUrl: cartImage,
     },
     {
       title: "Consultation Services",
       desc: " Providing expert advice on product selection based on customer needs and preferences.",
-      imgUrl: "/src/assets/customerservice.svg",
+      imgUrl: customerserviceImage,
     },
     {
       title: "Technical Support",
       desc: "Offering assistance with product setup, troubleshooting, and maintenance.",
-      imgUrl: "/src/assets/hanbd.svg",
+      imgUrl: hanbdImage,
     },
     {
       title: "Repair Services",
       desc: "Providing repair services for damaged devices, including screen replacements, battery changes, and software issues.",
-      imgUrl: "/src/assets/cooked.svg",
+      imgUrl: cookedImage,
     },
   ];
   return (
@@ -101,7 +116,7 @@ const Home = () => {
               <div className="flex">
                 <Link to={"/advertisments"}>Our Ads</Link>
                 <img
-                  src="../assets/arrow.svg"
+                  src={arrowImage}
                   alt=""
                   className="w-4 ml-2 fill-white"
                 />
@@ -110,7 +125,7 @@ const Home = () => {
           </div>
           <div className="">
             <img
-              src="../assets/hero.jpg"
+              src={heroImage}
               alt=""
               className="rounded-lg w-[600px] 2xl:w-fit"
             />
@@ -121,10 +136,10 @@ const Home = () => {
             <div className="absolute right-0 w-24 h-24 bg-primaryContent rounded-full blur-3xl -z-50"></div>
           </div>
           <div>
-            <img src="../assets/watch.png" className="" />
+            <img src={watchImage} className="" />
           </div>
           <div>
-            <img src="../assets/lap.png" className="" />
+            <img src={lapImage} className="" />
           </div>
         </div>
 
