@@ -1,0 +1,45 @@
+[
+  {
+    "fullName": "Médjaouri Nihad",
+    "product": "Samsung Galaxy s24 ultra",
+    "description": "The Samsung Galaxy S24 Ultra is a top-tier smartphone with a 6.8-inch Dynamic AMOLED 2X display, Snapdragon 8 Gen 3 processor, and up to 16GB RAM. It features a 200MP quad-camera system, 5000mAh battery with fast charging, and S Pen support. Running One UI 6.1 on Android 14, it offers 8K video recording, IP68 durability, and eco-friendly materials, making it a perfect choice for performance and innovation.",
+    "mediaUrl": "src/media/Médjaouri Nihad.mp4",
+    "price": "1000"
+  },
+  {
+    "fullName": "Zidani isra",
+    "product": "Google pixel 8 pro",
+    "description": "The Google Pixel 8 Pro features the powerful Tensor G3 chip, a vibrant 6.7-inch OLED display, and a 50MP triple camera system for stunning photos.30W fast charging, and 5G connectivity, it ensures long-lasting performance and quick speeds. Plus, it offers years of software updates for ongoing improvements.",
+    "mediaUrl": "src/media/Zidani isra.webp",
+    "price": "4563"
+  },
+  {
+    "fullName": "Denidni Mounir",
+    "product": "Rode PodMic USB Microphone",
+    "description": "The PodMic USB is an ultra-versatile dynamic microphone ideal for podcasting, streaming, gaming, voice overs, and other speech applications for content creation. It delivers rich, full-bodied sound and features both an XLR and USB output for connecting to an audio interface or mixer like a classic broadcast microphone, or directly to a computer for plug-and-play recording. The digital USB output features RØDE’s ultra-low-noise, high-gain Revolution Preamp™ and powerful APHEX® digital signal processing for capturing studio-quality sound with ease, and a zero-latency headphone output complete with level control, making recording seamless. For even more versatility, the PodMic USB is also fully compatible with iOS and Android mobile devices, offering a high-quality portable podcasting or streaming solution.",
+    "features": "Features:\n\n- Broadcast-quality dynamic microphone\n- Analog XLR and digital USB-C connectivity\n- Fully compatible with Windows and Mac computers, and iOS and Android devices\n- On-board DSP for advanced APHEX® audio processing\n- Ultra-low-noise, high-gain Revolution Preamp™\n- Built-in headphone output with volume control and zero-latency monitoring\n- Compatible with RØDE’s suite of software – RØDE Connect, RØDE Central, RØDE Capture - and UNIFY\n- Integrated swing mount for simple and secure positioning\n- Internal pop filter for minimising plosives and internal shockmount to reduce vibrations\n- Studio-quality external pop filter included\n- Robust, all-metal construction – incredibly rugged and highly durable\n- Designed and made in RØDE’s precision manufacturing facilities in Sydney, Australia",
+    "mediaUrl": "src/media/Mounir.mp4",
+    "price": "4200"
+  },
+  {
+    "fullName": "Malik boubegtiten",
+    "product": "Ring Video Doorbell Pro",
+    "description": "The Ring Video Doorbell Pro is a high-performance smart doorbell designed to enhance home security. It features 1080p HD video for clear visuals, two-way audio for real-time communication, and advanced motion detection with customizable zones to reduce false alerts. The device connects to your home Wi-Fi and offers instant notifications on your smartphone or tablet whenever someone is at your door. With night vision and seamless integration with smart home systems, it provides 24/7 monitoring. Benefits include peace of mind, convenience, and the ability to check your front door from anywhere.",
+    "mediaUrl": "src/media/Malik.jpg",
+    "price": "9000"
+  },
+  {
+    "fullName": "Ismail Bezzaouya",
+    "product": "Realme C65 ",
+    "description": "",
+    "mediaUrl": "src/media/Ismail Bezzaouya.jpg",
+    "price": "1578"
+  },
+  {
+    "fullName": "Dellas Aymen",
+    "product": "Asus Gaming Laptop",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "mediaUrl": "src/media/Grey Modern Illustrative Product Promotion Instagram Post.gif",
+    "price": "0.00"
+  }
+]
