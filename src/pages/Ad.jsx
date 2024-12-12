@@ -1,81 +1,99 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 const Ad = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [ad, setAd] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchAd = async () => {
+      if (!id) {
+        setError("Invalid advertisement ID");
+        setLoading(false);
+        return;
+      }
+
       try {
         const docRef = doc(db, "products", id);
         const docSnap = await getDoc(docRef);
         
         if (docSnap.exists()) {
           setAd({ id: docSnap.id, ...docSnap.data() });
+        } else {
+          setError("Advertisement not found");
+          setTimeout(() => navigate('/advertisements'), 2000);
         }
       } catch (error) {
         console.error("Error fetching ad:", error);
+        setError("Failed to load advertisement");
       } finally {
         setLoading(false);
       }
     };
 
     fetchAd();
-  }, [id]);
+  }, [id, navigate]);
 
   const renderMedia = () => {
-    if (ad.videoUrl) {
-      return (
-        <div className="w-full h-full aspect-video">
-          <iframe
-            src={ad.videoUrl}
-            className="w-full h-full rounded-xl"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title="Embedded Drive Video"
-          />
-        </div>
-      );
-    } else if (ad.imageUrl) {
-      // For images, use an iframe for Google Drive images
-      if (ad.imageUrl.includes('drive.google.com')) {
+    try {
+      if (ad.videoUrl) {
         return (
           <div className="w-full h-full aspect-video">
             <iframe
-              src={`https://drive.google.com/file/d/${ad.imageUrl.match(/id=([^&]+)/)[1]}/preview`}
+              src={ad.videoUrl}
               className="w-full h-full rounded-xl"
               frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              title="Embedded Drive Image"
+              title="Embedded Drive Video"
             />
           </div>
         );
+      } else if (ad.imageUrl) {
+        return (
+          <img
+            src={ad.imageUrl}
+            alt={ad.product}
+            className="w-full h-full object-cover rounded-xl"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = '/fallback-image.jpg'; // Add a fallback image path
+            }}
+          />
+        );
       }
-      // For non-Drive images, use regular img tag
       return (
-        <img
-          src={ad.imageUrl}
-          alt={ad.product}
-          className="w-full h-full object-cover rounded-xl"
-        />
+        <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-xl">
+          <p className="text-gray-500">No media available</p>
+        </div>
+      );
+    } catch (error) {
+      console.error("Error rendering media:", error);
+      return (
+        <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-xl">
+          <p className="text-gray-500">Error loading media</p>
+        </div>
       );
     }
-    return (
-      <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-xl">
-        <p className="text-gray-500">No media available</p>
-      </div>
-    );
   };
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-xl text-primaryContent">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-primaryContent">{error}</div>
       </div>
     );
   }

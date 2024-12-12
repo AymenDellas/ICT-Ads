@@ -95,11 +95,12 @@ const ProductForm = ({ onClose }) => {
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Full Name
+              Full Name <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               required
+              placeholder="Enter your full name"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.fullName}
               onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
@@ -108,11 +109,12 @@ const ProductForm = ({ onClose }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Product Name
+              Product Name <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               required
+              placeholder="Enter product name"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.product}
               onChange={(e) => setFormData({ ...formData, product: e.target.value })}
@@ -121,10 +123,11 @@ const ProductForm = ({ onClose }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Description
+              Description <span className="text-red-500">*</span>
             </label>
             <textarea
               required
+              placeholder="Enter product description"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               rows="4"
               value={formData.description}
@@ -132,38 +135,45 @@ const ProductForm = ({ onClose }) => {
             />
           </div>
 
-          <div className="flex gap-4 mb-4">
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="mediaType"
-                value="image"
-                checked={formData.mediaType === 'image'}
-                onChange={(e) => handleMediaChange('image', '')}
-                className="mr-2"
-              />
-              Image
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Media Type <span className="text-red-500">*</span>
             </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="mediaType"
-                value="video"
-                checked={formData.mediaType === 'video'}
-                onChange={(e) => handleMediaChange('video', '')}
-                className="mr-2"
-              />
-              Video
-            </label>
+            <div className="flex gap-4 mb-4">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="mediaType"
+                  value="image"
+                  required
+                  checked={formData.mediaType === 'image'}
+                  onChange={(e) => handleMediaChange('image', '')}
+                  className="mr-2"
+                />
+                Image
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="mediaType"
+                  value="video"
+                  checked={formData.mediaType === 'video'}
+                  onChange={(e) => handleMediaChange('video', '')}
+                  className="mr-2"
+                />
+                Video
+              </label>
+            </div>
           </div>
 
           {formData.mediaType === 'image' && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Image Link
+                Image Link <span className="text-red-500">*</span>
               </label>
               <input
                 type="url"
+                required
                 placeholder="Enter image URL..."
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={formData.imageUrl}
@@ -178,10 +188,11 @@ const ProductForm = ({ onClose }) => {
           {formData.mediaType === 'video' && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Video Link (Google Drive)
+                Video Link (Google Drive) <span className="text-red-500">*</span>
               </label>
               <input
                 type="url"
+                required
                 placeholder="Enter Google Drive video link..."
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={formData.videoUrl}
@@ -195,16 +206,19 @@ const ProductForm = ({ onClose }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Word and PowerPoint Presentation Link
+              Word and PowerPoint Presentation Link <span className="text-red-500">*</span>
             </label>
             <input
               type="url"
               required
-              placeholder="https://drive.google.com/file/d/..."
+              placeholder="Enter presentation link..."
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.mediaUrl2}
               onChange={(e) => setFormData({ ...formData, mediaUrl2: e.target.value })}
             />
+            <p className="mt-1 text-xs text-gray-500">
+              Upload your presentations and paste the link here
+            </p>
           </div>
 
           <div className="flex justify-end space-x-4 pt-4">
