@@ -14,34 +14,51 @@ const ProductForm = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Function to convert Google Drive link to direct link
+  const convertGoogleDriveLink = (url) => {
+    try {
+      // Handle different Google Drive URL formats
+      if (url.includes('drive.google.com')) {
+        // Format: https://drive.google.com/file/d/FILE_ID/view
+        const fileId = url.match(/\/d\/(.*?)\/|id=(.*?)$/);
+        if (fileId && (fileId[1] || fileId[2])) {
+          return `https://drive.google.com/uc?export=view&id=${fileId[1] || fileId[2]}`;
+        }
+      }
+      return url;
+    } catch (error) {
+      console.error("Error converting Drive link:", error);
+      return url;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      // Validate first URL (media link)
-      const mediaUrlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-      
-      // Special pattern for Google Drive links
+      // Validate Drive links
       const driveUrlPattern = /^https:\/\/drive\.google\.com\/(file\/d\/|drive\/folders\/|open\?id=)[-\w]+/;
       
-      if (!mediaUrlPattern.test(formData.mediaUrl1)) {
-        throw new Error("Please enter a valid media URL");
+      if (!driveUrlPattern.test(formData.mediaUrl1)) {
+        throw new Error("Please enter a valid Google Drive link for the media");
       }
 
       if (!driveUrlPattern.test(formData.mediaUrl2)) {
-        throw new Error("Please enter a valid Google Drive link");
+        throw new Error("Please enter a valid Google Drive link for the presentation");
       }
 
-      // Check if user is authenticated
-      if (!auth.currentUser) {
-        throw new Error("You must be logged in to submit a product");
-      }
+      // Convert links to direct format
+      const convertedData = {
+        ...formData,
+        mediaUrl1: convertGoogleDriveLink(formData.mediaUrl1),
+        mediaUrl2: formData.mediaUrl2 // Keep original link for presentations
+      };
 
       // Add to Firestore
       const docRef = await addDoc(collection(db, "products"), {
-        ...formData,
+        ...convertedData,
         userId: auth.currentUser.uid,
         createdAt: new Date().toISOString(),
       });
@@ -120,16 +137,19 @@ const ProductForm = ({ onClose }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Media Link
+              Media Link (Google Drive)
             </label>
             <input
               type="url"
               required
-              placeholder="https://example.com/image.jpg"
+              placeholder="https://drive.google.com/file/d/..."
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.mediaUrl1}
               onChange={(e) => setFormData({ ...formData, mediaUrl1: e.target.value })}
             />
+            <p className="mt-1 text-sm text-gray-500">
+              Please share a Google Drive link for your image or video
+            </p>
           </div>
 
           <div>
