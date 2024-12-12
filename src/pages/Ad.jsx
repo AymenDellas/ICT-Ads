@@ -49,10 +49,11 @@ const Ad = () => {
         {/* Left Side - Image Section */}
         <div className="md:w-1/2">
           <div className="aspect-w-16 aspect-h-12 rounded-2xl overflow-hidden bg-gray-100">
-            <img
+            <iframe
               src={ad.mediaUrl1}
-              alt={ad.product}
+              allow="autoplay"
               className="w-full h-full object-cover"
+              frameBorder="0"
             />
           </div>
         </div>
