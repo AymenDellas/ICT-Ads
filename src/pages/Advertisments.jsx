@@ -32,28 +32,6 @@ const Advertisments = () => {
     fetchAds();
   }, []);
 
-  // Highlight matching text
-  const highlightText = (text, highlight) => {
-    if (!highlight.trim()) {
-      return <span>{text}</span>;
-    }
-    
-    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
-    return (
-      <span>
-        {parts.map((part, index) => 
-          part.toLowerCase() === highlight.toLowerCase() ? (
-            <span key={index} className="bg-yellow-200 text-gray-900">
-              {part}
-            </span>
-          ) : (
-            <span key={index}>{part}</span>
-          )
-        )}
-      </span>
-    );
-  };
-
   // Filter and sort ads
   const getFilteredAds = () => {
     let filteredResults = [...ads];
@@ -80,6 +58,20 @@ const Advertisments = () => {
     }
 
     return filteredResults;
+  };
+
+  // Function to get thumbnail URL
+  const getThumbnail = (ad) => {
+    if (ad.imageUrl) {
+      return ad.imageUrl;
+    } else if (ad.videoUrl) {
+      // Extract video ID and create thumbnail URL
+      const videoId = ad.videoUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      if (videoId && videoId[1]) {
+        return `https://drive.google.com/thumbnail?id=${videoId[1]}`;
+      }
+    }
+    return 'path/to/default-thumbnail.jpg'; // Add a default thumbnail image
   };
 
   if (loading) {
@@ -120,20 +112,43 @@ const Advertisments = () => {
             onClick={() => navigate(`/ad/${ad.id}`)}
             className="cursor-pointer group bg-white rounded-xl overflow-hidden hover:scale-[1.02] transition-all duration-300 shadow-sm hover:shadow-xl"
           >
-            <div className="aspect-[4/3] overflow-hidden">
+            <div className="aspect-[4/3] overflow-hidden relative">
               <img
-                src={ad.mediaUrl1}
+                src={getThumbnail(ad)}
                 alt={ad.product}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
+              {ad.videoUrl && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                  <svg 
+                    className="w-12 h-12 text-white opacity-80" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" 
+                    />
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                    />
+                  </svg>
+                </div>
+              )}
             </div>
             <div className="p-3 bg-actions">
               <h3 className="font-semibold text-primaryContent text-sm mb-1 truncate">
-                {highlightText(ad.product, searchTerm)}
+                {ad.product}
               </h3>
               <div className="flex justify-between items-center">
                 <p className="text-primaryContent text-xs truncate">
-                  {highlightText(ad.fullName, searchTerm)}
+                  {ad.fullName}
                 </p>
               </div>
             </div>
