@@ -32,6 +32,28 @@ const Advertisments = () => {
     fetchAds();
   }, []);
 
+  // Highlight matching text
+  const highlightText = (text, highlight) => {
+    if (!highlight.trim()) {
+      return <span>{text}</span>;
+    }
+    
+    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    return (
+      <span>
+        {parts.map((part, index) => 
+          part.toLowerCase() === highlight.toLowerCase() ? (
+            <span key={index} className="bg-yellow-200 text-gray-900">
+              {part}
+            </span>
+          ) : (
+            <span key={index}>{part}</span>
+          )
+        )}
+      </span>
+    );
+  };
+
   // Filter and sort ads
   const getFilteredAds = () => {
     let filteredResults = [...ads];
@@ -74,13 +96,13 @@ const Advertisments = () => {
       <div className="mb-8 flex justify-end gap-4">
         <input
           type="text"
-          placeholder="Search products..."
-          className="w-48 px-3 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+          placeholder="Search by product or student name..."
+          className="w-64 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-actions text-sm"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <select
-          className="w-40 px-3 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+          className="w-40 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-actions text-sm"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
         >
@@ -107,11 +129,11 @@ const Advertisments = () => {
             </div>
             <div className="p-3 bg-actions">
               <h3 className="font-semibold text-primaryContent text-sm mb-1 truncate">
-                {ad.product}
+                {highlightText(ad.product, searchTerm)}
               </h3>
               <div className="flex justify-between items-center">
                 <p className="text-primaryContent text-xs truncate">
-                  {ad.fullName}
+                  {highlightText(ad.fullName, searchTerm)}
                 </p>
               </div>
             </div>
