@@ -74,9 +74,8 @@ const ProductForm = ({ onClose }) => {
         const fileId = url.match(/\/d\/(.*?)\/|id=(.*?)$/);
         if (fileId && (fileId[1] || fileId[2])) {
           const id = fileId[1] || fileId[2];
-          // Return both preview and direct link formats
+          // Use the more reliable embed format
           return `https://drive.google.com/file/d/${id}/preview`;
-          // Alternative: return `https://drive.google.com/uc?export=view&id=${id}`;
         }
       }
       return url;

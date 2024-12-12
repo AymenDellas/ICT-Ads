@@ -51,9 +51,11 @@ const Ad = () => {
           <div className="aspect-w-16 aspect-h-12 rounded-2xl overflow-hidden bg-gray-100">
             <iframe
               src={ad.mediaUrl1}
-              allow="autoplay"
-              className="w-full h-full object-cover"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              className="w-full h-full"
               frameBorder="0"
+              loading="lazy"
             />
           </div>
         </div>
