@@ -15,6 +15,16 @@ const ProductForm = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const isFormValid = () => {
+    return (
+      formData.fullName.trim() !== "" &&
+      formData.product.trim() !== "" &&
+      formData.description.trim() !== "" &&
+      formData.mediaUrl2.trim() !== "" &&
+      (formData.imageUrl.trim() !== "" || formData.videoUrl.trim() !== "") // At least one media URL required
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
